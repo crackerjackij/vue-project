@@ -6,11 +6,11 @@
     <p><button @click="search()">검색</button></p>
 
     <div>
-      <table id='tb'>
+      <table class='tb-border'>
         <colgroup>
           <col style='width:30%'/>
           <col style='auto'/>
-          <col style='width:10%'/>
+          <col style='width:12%'/>
         </colgroup>
         <thead>
           <tr>
@@ -25,10 +25,10 @@
           </tr>
         </tbody>
         <tbody v-else>
-          <tr v-for=' item in resultJson' :key=' item.title '>
-            <td>{{item.title}}</td>
-            <td>{{item.description}}</td>
-            <td>{{item.pubDate}}</td>
+          <tr v-for=' item in resultJson' :key=' item.title ' class='tr-align'>
+            <td v-html="item.title"></td>
+            <td v-html="item.description"></td>
+            <td>{{item.pubDate | parsePrintDate}}</td>
           </tr>
         </tbody>
       </table>
@@ -63,6 +63,12 @@ export default {
 
       return param
     }
+  },
+  filters: {
+    parsePrintDate (pubDate) {
+      var date = new Date(pubDate)
+      return date.getFullYear() + '년' + (date.getMonth() + 1) + '월' + date.getDate() + '일'
+    }
   }
 }
 </script>
@@ -77,7 +83,16 @@ export default {
   margin-top: 60px;
 }
 
-#tb {
-  border : '1px solid #92969a'
+table {
+  width : 100%;
+  border-top : 1px solid #92969a;
+  border-collapse : collapse;
+}
+th, td {
+  border-bottom : 1px solid #92969a;
+  padding : 10px;
+}
+.tr-align {
+  text-align : left;
 }
 </style>
