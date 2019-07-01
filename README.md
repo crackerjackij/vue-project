@@ -1,8 +1,10 @@
 # vue-project
 
-> vue-cli AND express use naver news search api developer
-> Get a naver api key https://developers.naver.com/docs/search/news/
-> Register the issued key /src/server/router/index.js
+1. vue-cli AND express use naver news search api developer
+
+2. Get a naver api key https://developers.naver.com/docs/search/news/
+
+3. Register the issued key /src/server/router/index.js
 
 ## Build Setup
 
