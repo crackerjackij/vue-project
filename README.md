@@ -11,6 +11,7 @@
 
 # install dependencies
 download source your coustom dictory
+
 $ cd my-project
 $ npm install
 
