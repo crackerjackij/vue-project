@@ -7,9 +7,10 @@
 ## Build Setup
 
 ``` bash
+# first npm and node install
+
 # install dependencies
-$ npm install -g vue-cli
-$ vue init webpack my-project
+download source your coustom dictory
 $ cd my-project
 $ npm install
 
@@ -17,7 +18,8 @@ $ npm install
 $ npm run dev
 
 # express server start
-$ cd ./src/server
+# another execute command window
+$ cd my-project/src/server
 $ node server.js
 
 # connect url(webbrowser)
