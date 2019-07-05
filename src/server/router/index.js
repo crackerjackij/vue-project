@@ -1,11 +1,13 @@
 module.exports = function(app)
 {
-  var client_id = 'client_id';
-  var client_secret = 'cliend_secret Key';
+  var client_id = 'YOUR CLIENT_ID';
+  var client_secret = 'YOUR CLIENT_SECRET';
 
   app.get('/search/news', function (req, res) {
      console.log("검색 API 요청 :: " + req.query.query);
-     var api_url = 'https://openapi.naver.com/v1/search/news.json?query=' + encodeURI(req.query.query); // json 결과
+     console.log("검색 API 요청 갯수 :: " + req.query.display);
+     console.log("검색 API 요청 정렬 :: " + req.query.sort);
+     var api_url = 'https://openapi.naver.com/v1/search/news.json?query=' + encodeURI(req.query.query) + '&display=' + encodeURI(req.query.display) + '&sort=' + encodeURI(req.query.sort)  + '&start=' + encodeURI(req.query.start); // json 결과
   //   var api_url = 'https://openapi.naver.com/v1/search/blog.xml?query=' + encodeURI(req.query.query); // xml 결과
      var request = require('request');
      var options = {

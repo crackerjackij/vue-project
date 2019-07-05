@@ -1,11 +1,20 @@
 <template>
   <div id="app">
     <h1>NAVER 뉴스 검색 서비스</h1>
-    <input type="text" v-model="searchTxt" />
-    <p>{{searchTxt}}</p>
-    <p><button @click="search()">검색</button></p>
+    <input type="text" v-model="searchTxt" @keyup.enter="search()" autofocus/>
+    <!--<p>{{searchTxt}}</p>-->
+    <p><button v-bind:class="{ active: isActive }" @click="search()">검색</button></p>
 
     <div>
+      <div style="float:right">
+        <span><input type='radio' value='sim' id='simR' v-model='sort'><label for='simR'>유사도순</label></span>
+        <span><input type='radio' value='date' id='dateR' v-model='sort'><label for='dateR'>날짜순</label></span>
+        <select v-model="displayCnt">
+          <option v-for=' option in displayCnts ' :value=' option ' :key=' option '>
+            {{ option }}
+          </option>
+        </select>
+      </div>
       <table class='tb-border'>
         <colgroup>
           <col style='width:30%'/>
@@ -25,9 +34,9 @@
           </tr>
         </tbody>
         <tbody v-else>
-          <tr v-for=' item in resultJson' :key=' item.title ' class='tr-align'>
+          <tr v-for=' (item, index) in resultJson' :key=' index ' class='tr-align'>
             <td v-html="item.title"></td>
-            <td v-html="item.description"></td>
+            <td><a v-bind:href="item.link" target="_blank"><span v-html="item.description"></span></a></td>
             <td>{{item.pubDate | parsePrintDate}}</td>
           </tr>
         </tbody>
@@ -45,22 +54,29 @@ export default {
     return {
       searchTxt: '',
       searchUrl: '/search/news',
-      resultJson: []
+      resultJson: [],
+      isActive: false,
+      displayCnt: 10,
+      displayCnts: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      sort: 'sim'
     }
   },
   methods: {
     search () {
-      axios.get(this.searchUrl, { params: this.param() }).then(result => { this.resultJson = result.data.items }).catch(function (error) {
-        console.log(error)
-      })
+      this.isActive = true
+      axios.get(this.searchUrl, { params: this.param() })
+        .then(result => {
+          this.resultJson = result.data.items
+        }).catch(function (error) {
+          console.log(error)
+        }).finally(() => { this.isActive = false })
     },
     param () {
       var param = {}
       param.query = this.searchTxt
-      param.display = '10'
+      param.display = this.displayCnt
       param.start = '1'
-      param.sort = 'sim'
-
+      param.sort = this.sort
       return param
     }
   },
@@ -94,5 +110,8 @@ th, td {
 }
 .tr-align {
   text-align : left;
+}
+.active {
+  display : none;
 }
 </style>
