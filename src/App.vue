@@ -42,6 +42,12 @@
         </tbody>
       </table>
     </div>
+    <p></p>
+    <div>
+      <a href="http://developers.naver.com" target="_blank">
+        <img width='10%' height='10%' src="./assets/naver_logo.png" alt="NAVER 오픈 API" />
+      </a>
+    </div>
   </div>
 </template>
 
